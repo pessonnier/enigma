@@ -1,6 +1,7 @@
 # Enigma – Spécification fonctionnelle et technique
 
 Ce projet vise à réaliser une simulation fidèle de la machine de chiffrement **Enigma** en Python. La spécification couvre les attentes fonctionnelles, les contraintes techniques et les règles de calcul associées aux rotors, au réflecteur, aux anneaux (ring settings), à la position initiale, au câblage d'entrée (plugboard) et au mécanisme d'avancement des rotors.
+Implémentation d'une simulation **Enigma M3** en Python, à partir des éléments de configuration présents dans le notebook.
 
 ## Objectifs
 - **Chiffrement et déchiffrement symétriques** : tout message chiffré avec une configuration donnée doit être déchiffrable en rejouant exactement la même configuration.
@@ -65,3 +66,32 @@ Ce projet vise à réaliser une simulation fidèle de la machine de chiffrement 
 - Suite de tests automatisés couvrant les cas listés.
 - Documentation succincte (exemples d'usage, options de configuration) dérivée de la présente spécification.
 
+## Fonctionnalités implémentées à verifier
+
+- Rotors historiques `I` à `VIII` + `beta`, `gamma`
+- Réflecteurs `A`, `B`, `C`, `Bthin`, `Cthin`
+- Plugboard (câblage) bidirectionnel
+- Réglages de bague (`ring_position`)
+- Position initiale des rotors (`rotor_position`)
+- Mécanisme de rotation des rotors avec **double-step**
+- Interface simple via la fonction `enigma(...)`
+
+## Utilisation
+
+```python
+from enigma import enigma
+
+cipher = enigma(
+    message="HELLOWORLD",
+    choix_rotor=("I", "IV", "III"),
+    ring_position="AZE",
+    rotor_position="QSD",
+    reflecteur="B",
+    cablage={"A": "V", "D": "E", "H": "O", "J": "K", "L": "S", "X": "Q"},
+)
+print(cipher)
+```
+
+## Propriété de symétrie
+
+Avec la **même configuration** et la même position initiale, chiffrer deux fois redonne le texte original.
